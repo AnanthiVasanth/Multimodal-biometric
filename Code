@@ -95,3 +95,10 @@
         "                    #cv2.imwrite(os.path.join(subject_output_dir2, \"frame{}.png\".format(j)), forehead_roi)\n",
         "                else:\n",
         "                    print(\"Could not detect both eyes.\")\n",
+
+//ROI enhancement
+def dog_clahe(image, sigma1=2, sigma2=3):\n",
+        "    blur1 = cv2.GaussianBlur(image, (0, 0), sigmaX=sigma1)\n",
+        "    blur2 = cv2.GaussianBlur(image, (0, 0), sigmaX=sigma2)\n",
+        "    dog_filtered = blur1 - blur2\n",
+        "    return dog_filtered\n",
