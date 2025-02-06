@@ -1,1 +1,62 @@
+//Image sharpening
+      "source": [
+        "def sharpen_image(image, sigma=1.5, strength=1.5):\n",
+        "    blurred = cv2.GaussianBlur(image, (0, 0), sigma)\n",
+        "    sharpened = cv2.addWeighted(image, 1.0 + strength, blurred, -strength, 0)\n",
+        "    return sharpened\n",
+        "def detect_and_circle_iris(image):\n",
+        "    eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_eye.xml')\n",
+        "    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)\n",
+        "    eyes = eye_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=11, minSize=(45, 45), maxSize=(100,100))\n",
+        "    for (x, y, w, h) in eyes:\n",
+        "        center = (x + w // 2, y + h // 2)\n",
+        "        radius = int(0.15 * max(w, h))\n",
+        "        cv2.circle(image, center, radius, (0, 255, 0), 2)\n",
+        "    return image, eyes"
+      ]
+
+//Iris detection
+"source": [
+        "input_dir = \"/content/drive/MyDrive/rpp/FSVP-PBP-main/FSVP-PBP-main/FSVP-PBP Database/Subject {}/Frames/frame{}.png\"\n",
+        "output_dir = \"/content/drive/MyDrive/rpp/FSVP-PBP-main/FSVP-PBP-main/iris_detection/Subject {}/Frames/frame{}.png\"\n",
+        "for i in range(1,201):\n",
+        "    print(\"*************************************\",i,\"********************************************\")\n",
+        "    for j in range(10):\n",
+        "        subject_input_dir = input_dir.format(i, j)\n",
+        "        subject_output_dir = output_dir.format(i, j)\n",
+        "        if os.path.isfile(subject_input_dir):\n",
+        "            print(subject_input_dir,\"   \")\n",
+        "            image_path = subject_input_dir\n",
+        "            nir_image = cv2.imread(subject_input_dir)\n",
+        "            original_image = cv2.imread(subject_input_dir)\n",
+        "            sharpened_image = sharpen_image(nir_image)\n",
+        "            result_image, eyes = detect_and_circle_iris( sharpened_image)\n",
+        "            plt.figure(figsize=(15, 5))\n",
+        "            plt.subplot(1, 3, 1)\n",
+        "            plt.imshow(cv2.cvtColor( original_image, cv2.COLOR_BGR2RGB))\n",
+        "            plt.title('Original Image')\n",
+        "            plt.subplot(1, 3, 2)\n",
+        "            plt.imshow(cv2.cvtColor(sharpened_image, cv2.COLOR_BGR2RGB))\n",
+        "            plt.title('Sharpened Image')\n",
+        "            plt.subplot(1, 3, 3)\n",
+        "            plt.imshow(cv2.cvtColor(result_image, cv2.COLOR_BGR2RGB))\n",
+        "            plt.title('Iris Detection')\n",
+        "            plt.show()"
+      ]
+
+//ROI extraction
+"source": [
+        "def detect_roi(image_path, eyes_coordinates):\n",
+        "    image = cv2.imread(image_path)\n",
+        "    inter_ocular_distance = abs(((eyes_coordinates[1][0] + eyes_coordinates[1][2])) - ((eyes_coordinates[0][0] + eyes_coordinates[0][2] )))\n",
+        "    roi_width = int(1.62 * inter_ocular_distance)\n",
+        "    roi_height = int(0.5 * inter_ocular_distance)\n",
+        "    periocular_x = eyes_coordinates[1][0] - int(0.62 * roi_width)\n",
+        "    periocular_y = eyes_coordinates[1][1] - int(0.25 * roi_height)\n",
+        "    forehead_x = eyes_coordinates[1][0] - int(0.62 * roi_width)\n",
+        "    forehead_y = eyes_coordinates[1][1] - int(0.9 * inter_ocular_distance)\n",
+        "    periocular_roi = image[periocular_y:periocular_y + roi_height, periocular_x:periocular_x + roi_width]\n",
+        "    forehead_roi = image[forehead_y:forehead_y + roi_height, forehead_x:forehead_x + roi_width]\n",
+        "    return periocular_roi, forehead_roi\n"
+      ]
 
