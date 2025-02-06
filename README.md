@@ -5,4 +5,5 @@ Steps in multimodal biometric:
 2. Segmenting the periocular and forehead region (GRFHPR) with Golden ratio approach
 3. Enhancing the GRFHPR with Difference of 	Gaussian 	(DoG) and Contrast Limited 	Adaptive Histogram 	Equalization (CLAHE) 	method, DoG-CLAHE
 4. Constructive features are extracted with multilayer CNN (MLCNN)
-5. Identification is performed with multiclass support vector machine (SVM). 
+5. Identification is performed with multiclass support vector machine (SVM)
+6. Various evaluation measures such as accuracy, precision, recall, F1 score, false acceptance rate (FAR), false rejection rate (FRR), and  equal error rate (EER) are computed
