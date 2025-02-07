@@ -1,4 +1,4 @@
-//Image sharpening
+#Image sharpening
       "source": [
         "def sharpen_image(image, sigma=1.5, strength=1.5):\n",
         "    blurred = cv2.GaussianBlur(image, (0, 0), sigma)\n",
@@ -15,7 +15,7 @@
         "    return image, eyes"
       ]
 
-//Iris detection
+#Iris detection
 "source": [
         "input_dir = \"/content/drive/MyDrive/rpp/FSVP-PBP-main/FSVP-PBP-main/FSVP-PBP Database/Subject {}/Frames/frame{}.png\"\n",
         "output_dir = \"/content/drive/MyDrive/rpp/FSVP-PBP-main/FSVP-PBP-main/iris_detection/Subject {}/Frames/frame{}.png\"\n",
@@ -44,7 +44,7 @@
         "            plt.show()"
       ]
 
-//ROI extraction
+#ROI extraction
 "source": [
         "def detect_roi(image_path, eyes_coordinates):\n",
         "    image = cv2.imread(image_path)\n",
@@ -60,7 +60,7 @@
         "    return periocular_roi, forehead_roi\n"
       ]
 
-//Extracting ROI and writing into separate folder
+#Extracting ROI and writing into separate folder
 "source": [
         "def create_folder(folder_path):\n",
         "    if not os.path.exists(folder_path):\n",
@@ -96,7 +96,7 @@
         "                else:\n",
         "                    print(\"Could not detect both eyes.\")\n",
 
-//ROI enhancement
+#ROI enhancement
 def dog_clahe(image, sigma1=2, sigma2=3):\n",
         "    blur1 = cv2.GaussianBlur(image, (0, 0), sigmaX=sigma1)\n",
         "    blur2 = cv2.GaussianBlur(image, (0, 0), sigmaX=sigma2)\n",
@@ -104,7 +104,7 @@ def dog_clahe(image, sigma1=2, sigma2=3):\n",
         "    dog_clahe = clahe(dog_filtered),
         "    return dog_clahe\n",
 
-//Feature extraction and classification
+#Feature extraction and classification
 "source": [
         "import numpy as np\n",
         "from sklearn.svm import SVC\n",
