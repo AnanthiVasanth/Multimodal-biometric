@@ -7,3 +7,6 @@ Steps in multimodal biometric:
 4. Constructive features are extracted with multilayer CNN (MLCNN)
 5. Identification is performed with multiclass support vector machine (SVM)
 6. Various evaluation measures such as accuracy, precision, recall, F1 score, false acceptance rate (FAR), false rejection rate (FRR), and  equal error rate (EER) are computed
+
+Journal Title: Multimodal Biometric Authentication Using Vein Patterns: A Deep Learning Approach
+Journal Name: The Visual Computer
