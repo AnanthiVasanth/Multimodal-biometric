@@ -10,4 +10,4 @@ Steps in multimodal biometric:
 
 Journal Title: Multimodal Biometric Authentication Using Vein Patterns: A Deep Learning Approach
 
-Journal Name: Signal, Image and Video Processing
+
